@@ -1,8 +1,24 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const services = require('./services/index');
-const middlewares = require('./middlewares/index');
+const {
+  getAllPeoples,
+  getPeoplesById,
+  login,
+  addPeople,
+  updatePeopleById,
+  delPeopleById,
+} = require('./services/index');
+const {
+  emailValidation,
+  passwordValidation,
+  tokenValidation,
+  nameValidation,
+  ageValidation,
+  talkValidation,
+  dateValidation,
+  rateValidation,
+} = require('./middlewares/index');
 const helpers = require('./helpers/index.js');
 
 const app = express();
@@ -14,26 +30,26 @@ app.get('/', (_request, response) => {
   response.status(helpers.httpStatusCodes.OK).send();
 });
 
-app.get('/talker', services.getAllPeoples);
-app.get('/talker/:id', services.getPeoplesById);
-app.post('/login', middlewares.emailValidation, middlewares.passwordValidation, services.login);
+app.get('/talker', getAllPeoples);
+app.get('/talker/:id', getPeoplesById);
+app.post('/login', emailValidation, passwordValidation, login);
 app.post('/talker',
-middlewares.tokenValidation,
-middlewares.nameValidation,
-middlewares.ageValidation,
-middlewares.talkValidation,
-middlewares.dateValidation,
-middlewares.rateValidation,
-services.addPeople);
+  tokenValidation,
+  nameValidation,
+  ageValidation,
+  talkValidation,
+  dateValidation,
+  rateValidation,
+  addPeople);
 app.put('/talker/:id',
-middlewares.tokenValidation,
-middlewares.nameValidation,
-middlewares.ageValidation,
-middlewares.talkValidation,
-middlewares.dateValidation,
-middlewares.rateValidation,
-services.updatePeopleById);
-app.delete('/talker/:id', middlewares.tokenValidation, services.delPeopleById);
+  tokenValidation,
+  nameValidation,
+  ageValidation,
+  talkValidation,
+  dateValidation,
+  rateValidation,
+  updatePeopleById);
+app.delete('/talker/:id', tokenValidation, delPeopleById);
 
 app.listen(helpers.httpStatusCodes.PORT, () => {
   console.log('Online');
