@@ -1,3 +1,5 @@
+const fs = require('fs').promises;
+
 // Com base em pesquisa no Stackoverflow
 // https://stackoverflow.com/questions/8532406/
 // create-a-random-token-in-javascript-based-on-user-details
@@ -9,7 +11,27 @@ const tokenGenerator = () => {
   const random16 = random + random;
   return random16.substr(0, 16);
 };
+const readFile = async (path) => {
+  try {
+    return JSON.parse(await fs.readFile(path, 'utf8'));
+  } catch (error) {
+    return null;
+  }
+};
+
+const writeFile = async (path, content) => {
+  try {
+    const arrContent = await readFile(path) || [];
+    arrContent.push(content);
+    await fs.writeFile(path, JSON.stringify(arrContent));
+    return content;
+  } catch (error) {
+    return null;
+  }
+};
 
 module.exports = {
   tokenGenerator,
+  readFile,
+  writeFile,
 };

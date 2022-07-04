@@ -1,6 +1,9 @@
+// Regex inspirado no site:
+// https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascrip/
 const emailValidation = (req, res, next) => {
   const { email } = req.body;
   const emailRegex = /@/ && /.com/;
+
   if (!email) {
     return res.status(400).json({ message: 'O campo "email" é obrigatório' });
   }
