@@ -8,6 +8,7 @@ const {
   addPeople,
   updatePeopleById,
   delPeopleById,
+  searchQuery,
 } = require('./services/index');
 const {
   emailValidation,
@@ -31,24 +32,25 @@ app.get('/', (_request, response) => {
 });
 
 app.get('/talker', getAllPeoples);
+app.get('/talker/search', tokenValidation, searchQuery);
 app.get('/talker/:id', getPeoplesById);
 app.post('/login', emailValidation, passwordValidation, login);
 app.post('/talker',
-  tokenValidation,
-  nameValidation,
-  ageValidation,
-  talkValidation,
-  dateValidation,
-  rateValidation,
-  addPeople);
+tokenValidation,
+nameValidation,
+ageValidation,
+talkValidation,
+dateValidation,
+rateValidation,
+addPeople);
 app.put('/talker/:id',
-  tokenValidation,
-  nameValidation,
-  ageValidation,
-  talkValidation,
-  dateValidation,
-  rateValidation,
-  updatePeopleById);
+tokenValidation,
+nameValidation,
+ageValidation,
+talkValidation,
+dateValidation,
+rateValidation,
+updatePeopleById);
 app.delete('/talker/:id', tokenValidation, delPeopleById);
 
 app.listen(helpers.httpStatusCodes.PORT, () => {

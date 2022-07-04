@@ -56,6 +56,16 @@ const delPeopleById = async (req, res) => {
   return res.status(helpers.httpStatusCodes.NO_CONTENT).json();
 };
 
+const searchQuery = async (req, res) => {
+  const { q } = req.query;
+
+  const peoples = await helpers.readFile(CONTENT_FILE);
+  const peopleSearch = await peoples.filter((people) => people.name.toLowerCase()
+    .includes(q.toLowerCase())) || [];
+    
+  res.status(helpers.httpStatusCodes.OK).json(peopleSearch);
+};
+
 module.exports = {
   getAllPeoples,
   getPeoplesById,
@@ -63,4 +73,5 @@ module.exports = {
   addPeople,
   updatePeopleById,
   delPeopleById,
+  searchQuery,
 };
