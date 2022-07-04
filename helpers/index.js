@@ -1,5 +1,15 @@
 const fs = require('fs').promises;
 
+const httpStatusCodes = {
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER: 500,
+  PORT: 3000,
+ };
+
 // Com base em pesquisa no Stackoverflow
 // https://stackoverflow.com/questions/8532406/
 // create-a-random-token-in-javascript-based-on-user-details
@@ -31,6 +41,7 @@ const writeFile = async (path, content) => {
 };
 
 module.exports = {
+  httpStatusCodes,
   tokenGenerator,
   readFile,
   writeFile,

@@ -3,24 +3,29 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const services = require('./services/index');
 const middlewares = require('./middlewares/index');
+const helpers = require('./helpers/index.js');
 
 const app = express();
 app.use(helmet());
 app.use(bodyParser.json());
 
-const HTTP_OK_STATUS = 200;
-const PORT = '3000';
-
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
-  response.status(HTTP_OK_STATUS).send();
+  response.status(helpers.httpStatusCodes.OK).send();
 });
 
 app.get('/talker', services.getAllPeoples);
 app.get('/talker/:id', services.getPeoplesById);
 app.post('/login', middlewares.emailValidation, middlewares.passwordValidation, services.login);
-// app.post('/talker', )
+app.post('/talker',
+middlewares.tokenValidation,
+middlewares.nameValidation,
+middlewares.ageValidation,
+middlewares.talkValidation,
+middlewares.dateValidation,
+middlewares.rateValidation,
+services.addPeople);
 
-app.listen(PORT, () => {
+app.listen(helpers.httpStatusCodes.PORT, () => {
   console.log('Online');
 });
