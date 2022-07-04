@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const services = require('./services/index');
+const middlewares = require('./middlewares/index');
 
 const app = express();
 app.use(helmet());
@@ -17,7 +18,7 @@ app.get('/', (_request, response) => {
 
 app.get('/talker', services.getAllPeoples);
 app.get('/talker/:id', services.getPeoplesById);
-app.post('/login', services.login);
+app.post('/login', middlewares.emailValidation, middlewares.passwordValidation, services.login);
 
 app.listen(PORT, () => {
   console.log('Online');
