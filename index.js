@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const services = require('./services/index');
 
 const app = express();
+app.use(helmet());
 app.use(bodyParser.json());
 
 const HTTP_OK_STATUS = 200;
@@ -11,6 +14,8 @@ const PORT = '3000';
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
+
+app.get('/talker', services.getAllPeople);
 
 app.listen(PORT, () => {
   console.log('Online');
