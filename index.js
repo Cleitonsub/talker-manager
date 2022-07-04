@@ -25,6 +25,14 @@ middlewares.talkValidation,
 middlewares.dateValidation,
 middlewares.rateValidation,
 services.addPeople);
+app.put('/talker/:id',
+middlewares.tokenValidation,
+middlewares.nameValidation,
+middlewares.ageValidation,
+middlewares.talkValidation,
+middlewares.dateValidation,
+middlewares.rateValidation,
+services.updatePeopleById);
 
 app.listen(helpers.httpStatusCodes.PORT, () => {
   console.log('Online');

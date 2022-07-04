@@ -32,9 +32,23 @@ const addPeople = async (req, res) => {
   return res.status(helpers.httpStatusCodes.CREATED).json(writePeople);
 };
 
+const updatePeopleById = async (req, res) => {
+  const { id } = req.params;
+
+  const peoples = await helpers.readFile(CONTENT_FILE);
+  const peopleById = await peoples.find((people) => people.id === Number(id));
+  const writePeople = await helpers.writeFile(CONTENT_FILE, {
+    id: peopleById.id,
+    ...req.body,
+  });
+
+  return res.status(helpers.httpStatusCodes.OK).json(writePeople);
+};
+
 module.exports = {
   getAllPeoples,
   getPeoplesById,
   login,
   addPeople,
+  updatePeopleById,
 };
