@@ -1,4 +1,5 @@
 const fs = require('fs').promises;
+const helpers = require('../helpers/index.js');
 
 const HTTP_OK_STATUS = 200;
 const NOT_FOUND = 404;
@@ -18,7 +19,10 @@ const getPeoplesById = async (req, res) => {
   return res.status(HTTP_OK_STATUS).json(peopleById);
 };
 
+const login = (req, res) => res.status(HTTP_OK_STATUS).json({ token: helpers.tokenGenerator() });
+
 module.exports = {
   getAllPeoples,
   getPeoplesById,
+  login,
 };

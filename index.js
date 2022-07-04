@@ -17,6 +17,7 @@ app.get('/', (_request, response) => {
 
 app.get('/talker', services.getAllPeoples);
 app.get('/talker/:id', services.getPeoplesById);
+app.post('/login', services.login);
 
 app.listen(PORT, () => {
   console.log('Online');
