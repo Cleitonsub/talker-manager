@@ -33,6 +33,7 @@ middlewares.talkValidation,
 middlewares.dateValidation,
 middlewares.rateValidation,
 services.updatePeopleById);
+app.delete('/talker/:id', middlewares.tokenValidation, services.delPeopleById);
 
 app.listen(helpers.httpStatusCodes.PORT, () => {
   console.log('Online');

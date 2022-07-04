@@ -3,6 +3,7 @@ const fs = require('fs').promises;
 const httpStatusCodes = {
   OK: 200,
   CREATED: 201,
+  NO_CONTENT: 204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
@@ -21,6 +22,7 @@ const tokenGenerator = () => {
   const random16 = random + random;
   return random16.substr(0, 16);
 };
+
 const readFile = async (path) => {
   try {
     return JSON.parse(await fs.readFile(path, 'utf8'));

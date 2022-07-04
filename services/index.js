@@ -1,3 +1,4 @@
+const fs = require('fs').promises;
 const helpers = require('../helpers/index.js');
 
 const CONTENT_FILE = './talker.json';
@@ -45,10 +46,21 @@ const updatePeopleById = async (req, res) => {
   return res.status(helpers.httpStatusCodes.OK).json(writePeople);
 };
 
+const delPeopleById = async (req, res) => {
+  const { id } = req.params;
+
+  const peoples = await helpers.readFile(CONTENT_FILE);
+  const peopleById = await peoples.filter((people) => people.id !== Number(id));
+  await fs.writeFile(CONTENT_FILE, JSON.stringify(peopleById));
+
+  return res.status(helpers.httpStatusCodes.NO_CONTENT).json();
+};
+
 module.exports = {
   getAllPeoples,
   getPeoplesById,
   login,
   addPeople,
   updatePeopleById,
+  delPeopleById,
 };
